@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entry #3 — Narrative Studies &amp; Field Notes | match&amp;remember</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Lexend:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --board-green:   #2d4a3e;
+    --board-green-2: #23392f;
+    --card-paper:    #f7f4ec;
+    --card-paper-2:  #efe9db;
+    --ink:           #23301f;
+    --coral:         #e2604a;
+    --sun:           #eeb43e;
+    --sky:           #4d94a3;
+    --chalk:         #f7f5ef;
+    --shadow-card: 0 10px 24px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.12);
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    background: var(--board-green);
+    background-image: radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 22px 22px;
+    color: var(--ink);
+    font-family:'Lexend', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color: var(--sun); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase;
+    color: var(--sun); display:flex; align-items:center; gap:0.6em;
+  }
+  .eyebrow::before{ content:""; width:22px; height:1px; background: var(--sun); display:inline-block; }
+
+  .topbar{
+    max-width:1040px; margin:0 auto; padding: 28px 24px 0;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    color: var(--chalk);
+  }
+  .brand{ font-family:'Kalam', cursive; font-weight:700; font-size:1.35rem; line-height:1; }
+  .brand span{ color: var(--sun); }
+  .topbar .meta{
+    text-align:right; font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    color: rgba(247,245,239,0.6); line-height:1.6;
+  }
+  .back-link{
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    color: rgba(247,245,239,0.75);
+  }
+
+  .hero{ max-width:1040px; margin:0 auto; padding: 40px 24px 56px; color: var(--chalk); }
+  .hero h1{
+    font-family:'Kalam', cursive; font-weight:700;
+    font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+    line-height:1.2; margin: 14px 0 12px; max-width: 26ch;
+  }
+  .hero .lede{ max-width:60ch; font-size:1rem; line-height:1.65; color: rgba(247,245,239,0.82); font-weight:300; }
+
+  main{
+    background: var(--card-paper);
+    border-radius: 22px 22px 0 0;
+    max-width:1040px; margin:0 auto; padding: 8px 0 0;
+    box-shadow: 0 -18px 50px rgba(0,0,0,0.25);
+  }
+  .section{ padding: 48px 40px; border-bottom: 1px dashed rgba(35,48,31,0.16); }
+  .section:last-of-type{ border-bottom:none; }
+  .section .eyebrow{ color:#a9702f; }
+  .section .eyebrow::before{ background:#a9702f; }
+  .section h2{ font-family:'Kalam', cursive; font-size:1.45rem; margin: 10px 0 20px; color: var(--board-green-2); }
+  .section p{ line-height:1.7; margin: 0 0 14px; }
+  .section p:last-child{ margin-bottom:0; }
+
+  /* verdict card for narrative rationale */
+  .verdict{
+    display:flex; gap:16px; align-items:flex-start;
+    background: var(--card-paper-2); border-left:3px solid var(--coral);
+    border-radius:8px; padding:18px 22px; margin-bottom:22px;
+  }
+  .verdict .tag{
+    flex:none; font-family:'JetBrains Mono', monospace; font-size:0.65rem;
+    text-transform:uppercase; letter-spacing:0.06em; color: var(--coral);
+    background: rgba(226,96,74,0.1); border:1px solid rgba(226,96,74,0.3);
+    padding:4px 10px; border-radius:20px; margin-top:2px;
+  }
+  .verdict p{ margin:0; }
+
+  /* sample cards */
+  .sample-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+  .sample-card{
+    background: var(--card-paper-2); border-radius:8px; padding:20px;
+    border-top:3px solid var(--sky);
+  }
+  .sample-card.b{ border-top-color: var(--sun); }
+  .sample-card h3{ font-family:'Kalam', cursive; font-size:1.02rem; margin:0 0 8px; color: var(--board-green-2); }
+  .sample-card p{ font-size:0.9rem; margin:0; color:#3d4a37; }
+
+  /* method choice card */
+  .method-card{
+    background: var(--board-green); color: var(--chalk);
+    border-radius:10px; padding: 26px 28px; box-shadow: var(--shadow-card);
+    margin-bottom: 22px;
+  }
+  .method-card h3{ font-family:'Kalam', cursive; font-size:1.1rem; margin:0 0 10px; color: var(--sun); }
+  .method-card p{ font-size:0.95rem; line-height:1.7; margin:0 0 10px; color: rgba(247,245,239,0.9); }
+  .method-card p:last-child{ margin-bottom:0; }
+
+  /* instrument table */
+  .instrument-note{
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    color:#a9702f; margin-bottom:14px; display:block;
+  }
+  table.fieldnotes{
+    width:100%; border-collapse:collapse; font-size:0.85rem;
+    background: var(--card-paper-2); border-radius:8px; overflow:hidden;
+  }
+  table.fieldnotes th{
+    background: var(--board-green); color: var(--chalk);
+    font-family:'JetBrains Mono', monospace; font-size:0.68rem;
+    text-transform:uppercase; letter-spacing:0.04em;
+    text-align:left; padding:10px 12px;
+  }
+  table.fieldnotes td{
+    padding:12px; border-bottom:1px solid rgba(35,48,31,0.1);
+    vertical-align:top; color:#3d4a37;
+  }
+  table.fieldnotes tr:last-child td{ border-bottom:none; }
+  .checklist{
+    display:grid; grid-template-columns: repeat(2,1fr); gap:8px;
+    margin-top:16px;
+  }
+  .checklist div{
+    display:flex; align-items:center; gap:8px;
+    background: var(--card-paper-2); border-radius:6px; padding:8px 12px;
+    font-size:0.85rem;
+  }
+  .checklist .box{
+    width:16px; height:16px; border:2px solid var(--board-green);
+    border-radius:3px; flex:none;
+  }
+
+  footer{
+    background: var(--board-green-2); color: rgba(247,245,239,0.65);
+    padding: 30px 40px 40px; border-radius: 0 0 22px 22px;
+    max-width:1040px; margin:0 auto;
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem; line-height:1.8;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+
+  @media (max-width: 640px){
+    .sample-grid{ grid-template-columns: 1fr; }
+    .checklist{ grid-template-columns: 1fr; }
+    .section{ padding: 36px 22px; }
+    table.fieldnotes{ font-size:0.78rem; }
+    table.fieldnotes th, table.fieldnotes td{ padding:8px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">match<span>&amp;</span>remember</div>
+    <div class="meta">
+      E-Portfolio · Entry #3<br>
+      Research and Teaching Practicum II · UNIMINUTO
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="eyebrow">week 7 · tools for qualitative data collection</div>
+    <h1>Narrative Studies, the Research Sample, and a Field Notes Instrument</h1>
+    <p class="lede">
+      This entry weighs narrative inquiry against the needs of the matching-game
+      study, sketches who the participants will be, and introduces the observation
+      instrument chosen to complement the vocabulary test scores.
+    </p>
+    <p style="margin-top:18px;">
+      <a class="back-link" href="entry-2-data-collection-methods.html">← Entry #2: Data collection methods</a>
+      &nbsp;·&nbsp;
+      <a class="back-link" href="index.html">Front page</a>
+    </p>
+  </header>
+
+  <main>
+
+    <!-- NARRATIVE STUDIES RATIONALE -->
+    <section class="section">
+      <div class="eyebrow">01 · narrative studies: useful or not?</div>
+      <h2>Why Narrative Studies Are Not the Core Design — But Still Have a Place</h2>
+
+      <div class="verdict">
+        <span class="tag">Not the main design</span>
+        <p>
+          Narrative inquiry centers on individual life stories, told over time and
+          interpreted for meaning — it is not built to compare test scores between
+          two groups. Since this study's core question asks whether the matching-game
+          group learns and retains more vocabulary than the workbook group, a
+          quasi-experimental, nonequivalent-groups design remains the right fit for
+          the main data (immediate and delayed vocabulary tests).
+        </p>
+      </div>
+
+      <p>
+        Even so, narrative elements are not entirely absent from this proposal. One
+        of the specific objectives is to describe how the teacher and students
+        perceive the practicality and ease of use of the matching game in this
+        classroom. That is a small, situated story about one class's experience —
+        exactly the kind of thing narrative-adjacent tools like teacher journals and
+        short student comments are good at capturing. So narrative studies are set
+        aside as the overall research design, but a light narrative thread survives
+        as a way to enrich the quantitative results with the teacher's own account
+        of what happened in the room.
+      </p>
+    </section>
+
+    <!-- SAMPLE -->
+    <section class="section">
+      <div class="eyebrow">02 · possible sample</div>
+      <h2>Who the Study Would Involve</h2>
+      <p>
+        The sample would be drawn from a single third-grade class (around eight and
+        nine years old) at a Colombian public primary school, split into two intact,
+        naturally-occurring groups rather than randomly assigned individuals — which
+        is typical of classroom-based, nonequivalent-groups research.
+      </p>
+      <div class="sample-grid">
+        <div class="sample-card">
+          <h3>Group A — Matching game</h3>
+          <p>Practises classroom-object vocabulary through the picture–word matching
+          game during the intervention sessions.</p>
+        </div>
+        <div class="sample-card b">
+          <h3>Group B — Workbook practice</h3>
+          <p>Practises the same vocabulary through the regular workbook-based
+          activities the teacher already uses.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHOSEN METHOD -->
+    <section class="section">
+      <div class="eyebrow">03 · chosen data collection method</div>
+      <h2>Classroom Observation: Field Notes</h2>
+
+      <div class="method-card">
+        <h3>Why field notes</h3>
+        <p>
+          Vocabulary test scores can show whether learning happened, but not what it
+          looked like while it happened. Field notes let the researcher record, in
+          the moment, how each group engages with its activity — attention,
+          participation, and the small moments of struggle or success that a test
+          score alone cannot show.
+        </p>
+        <h3>How it will be used</h3>
+        <p>
+          The teacher-researcher will complete one field notes sheet per session for
+          each group, taking brief descriptive notes during the activity and adding
+          a short reflective note afterward. Over the weeks of the intervention,
+          these notes build a running, situated account that supports and helps
+          explain the quantitative test results — and feeds directly into the
+          objective on teacher and student perceptions of the game.
+        </p>
+      </div>
+    </section>
+
+    <!-- DESIGNED INSTRUMENT -->
+    <section class="section">
+      <div class="eyebrow">04 · designed instrument</div>
+      <h2>Field Notes Template</h2>
+      <span class="instrument-note">one sheet per session, per group</span>
+
+      <table class="fieldnotes">
+        <tr>
+          <th style="width:14%">Date</th>
+          <th style="width:16%">Group / Activity</th>
+          <th style="width:35%">Descriptive notes<br><span style="font-weight:400;text-transform:none;">(what happened, in plain terms)</span></th>
+          <th style="width:35%">Reflective notes<br><span style="font-weight:400;text-transform:none;">(what it might mean)</span></th>
+        </tr>
+        <tr>
+          <td>—</td>
+          <td>☐ Matching game<br>☐ Workbook</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>—</td>
+          <td>☐ Matching game<br>☐ Workbook</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+
+      <div class="checklist">
+        <div><span class="box"></span> Students paid attention throughout</div>
+        <div><span class="box"></span> Most students participated actively</div>
+        <div><span class="box"></span> Students used the target words aloud</div>
+        <div><span class="box"></span> Some students seemed off-task or bored</div>
+        <div><span class="box"></span> Peer interaction/collaboration observed</div>
+        <div><span class="box"></span> Students asked to repeat the activity</div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>Research and Teaching Practicum II · UNIMINUTO — Corporación Universitaria Minuto de Dios</div>
+    <div><a href="index.html">Front page</a> · Entry #3</div>
+  </footer>
+
+</body>
+</html>

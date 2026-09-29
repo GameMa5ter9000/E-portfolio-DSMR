@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Match &amp; Remember — E-Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Lexend:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --board-green:   #2d4a3e;
+    --board-green-2: #23392f;
+    --card-paper:    #f7f4ec;
+    --card-paper-2:  #efe9db;
+    --ink:           #23301f;
+    --coral:         #e2604a;
+    --sun:           #eeb43e;
+    --sky:           #4d94a3;
+    --chalk:         #f7f5ef;
+    --line:          rgba(247,245,239,0.18);
+    --radius-card: 6px;
+    --shadow-card: 0 10px 24px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.12);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background: var(--board-green);
+    background-image:
+      radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 22px 22px;
+    color: var(--ink);
+    font-family:'Lexend', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; }
+
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color: var(--sun);
+    display:flex;
+    align-items:center;
+    gap:0.6em;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;
+    height:1px;
+    background: var(--sun);
+    display:inline-block;
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    max-width:1040px;
+    margin:0 auto;
+    padding: 28px 24px 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    color: var(--chalk);
+  }
+  .brand{
+    font-family:'Kalam', cursive;
+    font-weight:700;
+    font-size:1.35rem;
+    line-height:1;
+  }
+  .brand span{ color: var(--sun); }
+  .topbar .meta{
+    text-align:right;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    color: rgba(247,245,239,0.6);
+    line-height:1.6;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    max-width:1040px;
+    margin:0 auto;
+    padding: 56px 24px 80px;
+    color: var(--chalk);
+  }
+  .hero h1{
+    font-family:'Kalam', cursive;
+    font-weight:700;
+    font-size: clamp(1.9rem, 4.4vw, 3.1rem);
+    line-height:1.18;
+    margin: 14px 0 18px;
+    max-width: 20ch;
+  }
+  .hero .lede{
+    max-width:56ch;
+    font-size:1.02rem;
+    line-height:1.65;
+    color: rgba(247,245,239,0.82);
+    font-weight:300;
+  }
+
+  /* matching board illustration */
+  .board{
+    margin-top:48px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:22px;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+  .board .wire{
+    position:absolute;
+    inset:0;
+    z-index:0;
+  }
+  .pair{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    position:relative;
+    z-index:1;
+  }
+  .card-tile{
+    width:76px; height:76px;
+    background: var(--card-paper);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform: rotate(var(--tilt,-2deg));
+    transition: transform .25s ease;
+  }
+  .card-tile:hover{ transform: rotate(0deg) translateY(-3px); }
+  .card-tile svg{ width:38px; height:38px; }
+  .word-tile{
+    width:auto; height:76px;
+    padding:0 18px;
+    background: var(--sun);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Kalam', cursive;
+    font-weight:700;
+    font-size:1.15rem;
+    color: var(--board-green-2);
+    transform: rotate(var(--tilt,2deg));
+  }
+  .word-tile:hover{ transform: rotate(0deg) translateY(-3px); }
+  .link-dash{
+    width:26px; height:2px;
+    background-image: linear-gradient(90deg, rgba(247,245,239,0.55) 50%, transparent 50%);
+    background-size: 8px 2px;
+  }
+
+  /* ---------- main content ---------- */
+  main{
+    background: var(--card-paper);
+    border-radius: 22px 22px 0 0;
+    max-width:1040px;
+    margin:0 auto;
+    padding: 8px 0 0;
+    box-shadow: 0 -18px 50px rgba(0,0,0,0.25);
+  }
+
+  .section{
+    padding: 56px 40px;
+    border-bottom: 1px dashed rgba(35,48,31,0.16);
+  }
+  .section:last-of-type{ border-bottom:none; }
+
+  .section .eyebrow{ color:#a9702f; }
+  .section .eyebrow::before{ background:#a9702f; }
+
+  .section h2{
+    font-family:'Kalam', cursive;
+    font-size:1.6rem;
+    margin: 10px 0 22px;
+    color: var(--board-green-2);
+  }
+
+  /* ---- profile ---- */
+  .profile{
+    display:grid;
+    grid-template-columns: 150px 1fr;
+    gap:28px;
+    align-items:start;
+  }
+  .avatar{
+    width:150px; height:150px;
+    border-radius:10px;
+    background:
+      repeating-linear-gradient(45deg, rgba(45,74,62,0.08) 0 8px, transparent 8px 16px),
+      var(--card-paper-2);
+    border: 2px dashed rgba(45,74,62,0.35);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.68rem;
+    color:#6b7d63;
+    line-height:1.5;
+    padding:10px;
+  }
+  .profile-fields textarea,
+  .profile-fields input{
+    width:100%;
+    font-family:'Lexend', sans-serif;
+    font-size:0.95rem;
+    color: var(--ink);
+    background: var(--card-paper-2);
+    border:1px solid rgba(45,74,62,0.2);
+    border-left:3px solid var(--coral);
+    border-radius:4px;
+    padding:12px 14px;
+    line-height:1.6;
+    resize:vertical;
+  }
+  .field-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.68rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:#a9702f;
+    margin: 18px 0 6px;
+    display:block;
+  }
+  .field-label:first-child{ margin-top:0; }
+
+  /* ---- research question card ---- */
+  .rq-card{
+    background: var(--board-green);
+    color: var(--chalk);
+    border-radius:10px;
+    padding: 30px 32px;
+    box-shadow: var(--shadow-card);
+    position:relative;
+  }
+  .rq-card::before{
+    content:"?";
+    position:absolute;
+    top:-14px; left:26px;
+    width:32px; height:32px;
+    background: var(--sun);
+    color: var(--board-green-2);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Kalam', cursive;
+    font-weight:700;
+    font-size:1.1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+  .rq-card p{
+    font-size:1.08rem;
+    line-height:1.7;
+    margin:0;
+  }
+  .rq-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:20px;
+  }
+  .rq-tags span{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.68rem;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    background: rgba(247,245,239,0.1);
+    border:1px solid rgba(247,245,239,0.25);
+    padding:5px 10px;
+    border-radius:20px;
+  }
+
+  /* ---- objectives ---- */
+  .obj-general{
+    background: var(--card-paper-2);
+    border-radius:8px;
+    padding:20px 24px;
+    margin-bottom:26px;
+    border-left:3px solid var(--sky);
+  }
+  .obj-general .tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.68rem;
+    text-transform:uppercase;
+    color: var(--sky);
+    letter-spacing:0.08em;
+  }
+  .obj-general p{ margin:8px 0 0; line-height:1.65; }
+
+  .obj-list{
+    list-style:none;
+    margin:0; padding:0;
+    display:grid;
+    gap:14px;
+  }
+  .obj-list li{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+    background: var(--card-paper-2);
+    border-radius:8px;
+    padding:16px 18px;
+  }
+  .obj-num{
+    flex:none;
+    width:30px; height:30px;
+    border-radius:50%;
+    background: var(--coral);
+    color: var(--chalk);
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.78rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .obj-list p{ margin:0; line-height:1.6; }
+
+  /* ---- justification ---- */
+  .just-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:18px;
+  }
+  .just-card{
+    background: var(--card-paper-2);
+    border-radius:8px;
+    padding:22px 20px;
+    border-top:3px solid var(--sun);
+  }
+  .just-card h3{
+    font-family:'Kalam', cursive;
+    font-size:1.05rem;
+    margin:0 0 10px;
+    color: var(--board-green-2);
+  }
+  .just-card p{
+    font-size:0.9rem;
+    line-height:1.6;
+    margin:0;
+    color:#3d4a37;
+  }
+
+  /* ---- footer ---- */
+  footer{
+    background: var(--board-green-2);
+    color: rgba(247,245,239,0.65);
+    padding: 30px 40px 40px;
+    border-radius: 0 0 22px 22px;
+    max-width:1040px;
+    margin:0 auto;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    line-height:1.8;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  footer a{ color: var(--sun); text-decoration:none; }
+
+  @media (max-width: 640px){
+    .profile{ grid-template-columns: 1fr; }
+    .avatar{ width:100px; height:100px; }
+    .just-grid{ grid-template-columns: 1fr; }
+    .section{ padding: 42px 22px; }
+    .board{ gap:14px; }
+    .card-tile, .word-tile{ height:64px; }
+    .card-tile{ width:64px; }
+    .card-tile svg{ width:30px; height:30px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; scroll-behavior:auto !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">match<span>&amp;</span>remember</div>
+    <div class="meta">
+      E-Portfolio · Blog Entry #1<br>
+      Research and Teaching Practicum II · UNIMINUTO
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="eyebrow">front page · research profile &amp; proposal summary</div>
+    <h1>Using a Picture-Word Matching Game to Improve Classroom Vocabulary Learning in Colombian Third Graders</h1>
+    <p class="lede">
+      A practical, low-cost classroom intervention: pairing pictures with words to help
+      third graders in a Colombian public primary school learn — and actually remember —
+      everyday classroom-object vocabulary in English.
+    </p>
+
+    <div class="board" aria-hidden="true">
+      <div class="pair">
+        <div class="card-tile" style="--tilt:-4deg">
+          <svg viewBox="0 0 48 48" fill="none"><rect x="10" y="8" width="28" height="34" rx="2" fill="#e2604a"/><rect x="14" y="14" width="20" height="2.5" fill="#f7f4ec"/><rect x="14" y="20" width="20" height="2.5" fill="#f7f4ec"/><rect x="14" y="26" width="12" height="2.5" fill="#f7f4ec"/></svg>
+        </div>
+        <div class="link-dash"></div>
+        <div class="word-tile" style="--tilt:3deg">book</div>
+      </div>
+      <div class="pair">
+        <div class="card-tile" style="--tilt:3deg">
+          <svg viewBox="0 0 48 48" fill="none"><rect x="8" y="30" width="26" height="6" rx="2" fill="#4d94a3" transform="rotate(-28 21 33)"/><path d="M30 14 L38 22 L20 40 L12 38 L14 30 Z" fill="#eeb43e"/></svg>
+        </div>
+        <div class="link-dash"></div>
+        <div class="word-tile" style="--tilt:-2deg">pencil</div>
+      </div>
+      <div class="pair">
+        <div class="card-tile" style="--tilt:-3deg">
+          <svg viewBox="0 0 48 48" fill="none"><rect x="12" y="10" width="24" height="18" rx="2" fill="#4d94a3"/><rect x="14" y="28" width="4" height="12" fill="#a9702f"/><rect x="30" y="28" width="4" height="12" fill="#a9702f"/></svg>
+        </div>
+        <div class="link-dash"></div>
+        <div class="word-tile" style="--tilt:2deg">chair</div>
+      </div>
+      <div class="pair">
+        <div class="card-tile" style="--tilt:2deg">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M12 20 Q12 14 18 14 L30 14 Q36 14 36 20 L36 38 Q36 42 32 42 L16 42 Q12 42 12 38 Z" fill="#e2604a"/><rect x="17" y="9" width="14" height="8" rx="3" fill="#a9702f"/></svg>
+        </div>
+        <div class="link-dash"></div>
+        <div class="word-tile" style="--tilt:-3deg">backpack</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- RESEARCHER'S PROFILE -->
+    <section class="section" id="profile">
+      <div class="eyebrow">01 · about the researcher</div>
+      <h2>Researcher's Profile &amp; Motivation</h2>
+
+      <div class="profile">
+        <div class="avatar">photo<br>placeholder</div>
+        <div class="profile-fields">
+          <span class="field-label">Name</span>
+          <input type="text" placeholder="[Your full name — e.g. Dylan Steve Mejia Rivera]">
+
+          <span class="field-label">Program &amp; Institution</span>
+          <input type="text" placeholder="[Your program, e.g. Licenciatura en... — UNIMINUTO]">
+
+          <span class="field-label">Research interest &amp; motivation</span>
+          <textarea rows="5" placeholder="[Write here why you are interested in this topic — your personal or teaching experience with EFL vocabulary instruction in Colombian public schools, and what drew you to game-based learning. This will be added later.]"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESEARCH QUESTION -->
+    <section class="section" id="question">
+      <div class="eyebrow">02 · updated research question</div>
+      <h2>Research Question</h2>
+
+      <div class="rq-card">
+        <p>
+          To what extent does an in-class picture–word matching game improve immediate
+          learning and two-week retention of classroom-object vocabulary among Grade-3
+          students in a Colombian public primary school, compared with workbook-based
+          practice?
+        </p>
+        <div class="rq-tags">
+          <span>Activity: matching game</span>
+          <span>Focus: classroom-object vocabulary</span>
+          <span>Group: 3rd graders</span>
+          <span>Outcomes: immediate + 2-week retention</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- OBJECTIVES -->
+    <section class="section" id="objectives">
+      <div class="eyebrow">03 · general &amp; specific objectives</div>
+      <h2>Objectives</h2>
+
+      <div class="obj-general">
+        <span class="tag">General objective</span>
+        <p>To evaluate the extent to which an in-class picture–word matching game improves immediate learning and two-week retention of classroom-object vocabulary among Grade-3 students in a Colombian public primary school, compared with workbook-based practice.</p>
+      </div>
+
+      <ul class="obj-list">
+        <li>
+          <div class="obj-num">1</div>
+          <p>Compare the immediate vocabulary test scores of students who practise with the picture–word matching game and students who practise with workbook activities.</p>
+        </li>
+        <li>
+          <div class="obj-num">2</div>
+          <p>Compare the delayed vocabulary test scores of the two groups, in order to examine differences in vocabulary retention.</p>
+        </li>
+        <li>
+          <div class="obj-num">3</div>
+          <p>Design and implement a low-cost, picture–word matching game that can be integrated into regular English lessons in a third-grade public school class.</p>
+        </li>
+        <li>
+          <div class="obj-num">4</div>
+          <p>Describe the teacher's and students' perceptions of the practicality and ease of use of the matching game in this specific classroom context.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- JUSTIFICATION -->
+    <section class="section" id="justification">
+      <div class="eyebrow">04 · why this research matters</div>
+      <h2>Summary of the Justification</h2>
+
+      <div class="just-grid">
+        <div class="just-card">
+          <h3>Educational &amp; social</h3>
+          <p>Stronger English vocabulary in the early grades widens future opportunities in study, work, and communication — and helps children feel English belongs to their daily life, not just the textbook.</p>
+        </div>
+        <div class="just-card">
+          <h3>Pedagogical</h3>
+          <p>A picture-word matching game is a concrete, low-cost tool built from materials teachers already have — printed cards and class time — that can be reused across other vocabulary units.</p>
+        </div>
+        <div class="just-card">
+          <h3>Research &amp; feasibility</h3>
+          <p>Few studies test a single, non-digital game under real Colombian public-school conditions. Simple materials and short tests make this project realistic for the researcher and the school alike.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>Research and Teaching Practicum II · UNIMINUTO — Corporación Universitaria Minuto de Dios</div>
+    <div>E-Portfolio · Blog Entry #1 · <a href="#profile">Front page</a></div>
+  </footer>
+
+</body>
+</html>

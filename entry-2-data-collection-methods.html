@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entry #2 — Designing Two Data Collection Methods | match&amp;remember</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Lexend:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --board-green:   #2d4a3e;
+    --board-green-2: #23392f;
+    --card-paper:    #f7f4ec;
+    --card-paper-2:  #efe9db;
+    --ink:           #23301f;
+    --coral:         #e2604a;
+    --sun:           #eeb43e;
+    --sky:           #4d94a3;
+    --chalk:         #f7f5ef;
+    --shadow-card: 0 10px 24px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.12);
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    background: var(--board-green);
+    background-image: radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 22px 22px;
+    color: var(--ink);
+    font-family:'Lexend', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color: var(--sun); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase;
+    color: var(--sun); display:flex; align-items:center; gap:0.6em;
+  }
+  .eyebrow::before{ content:""; width:22px; height:1px; background: var(--sun); display:inline-block; }
+
+  .topbar{
+    max-width:1040px; margin:0 auto; padding: 28px 24px 0;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    color: var(--chalk);
+  }
+  .brand{ font-family:'Kalam', cursive; font-weight:700; font-size:1.35rem; line-height:1; }
+  .brand span{ color: var(--sun); }
+  .topbar .meta{
+    text-align:right; font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    color: rgba(247,245,239,0.6); line-height:1.6;
+  }
+  .nav-links{
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    color: rgba(247,245,239,0.75); display:flex; gap:18px; margin-top:18px;
+  }
+
+  .hero{ max-width:1040px; margin:0 auto; padding: 40px 24px 56px; color: var(--chalk); }
+  .hero h1{
+    font-family:'Kalam', cursive; font-weight:700;
+    font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+    line-height:1.2; margin: 14px 0 12px; max-width: 26ch;
+  }
+  .hero .lede{ max-width:60ch; font-size:1rem; line-height:1.65; color: rgba(247,245,239,0.82); font-weight:300; }
+
+  main{
+    background: var(--card-paper);
+    border-radius: 22px 22px 0 0;
+    max-width:1040px; margin:0 auto; padding: 8px 0 0;
+    box-shadow: 0 -18px 50px rgba(0,0,0,0.25);
+  }
+  .section{ padding: 48px 40px; border-bottom: 1px dashed rgba(35,48,31,0.16); }
+  .section:last-of-type{ border-bottom:none; }
+  .section .eyebrow{ color:#a9702f; }
+  .section .eyebrow::before{ background:#a9702f; }
+  .section h2{ font-family:'Kalam', cursive; font-size:1.45rem; margin: 10px 0 20px; color: var(--board-green-2); }
+  .section p{ line-height:1.7; margin: 0 0 14px; }
+  .section p:last-child{ margin-bottom:0; }
+
+  .sample-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+  .sample-card{ background: var(--card-paper-2); border-radius:8px; padding:20px; border-top:3px solid var(--sky); }
+  .sample-card.b{ border-top-color: var(--sun); }
+  .sample-card h3{ font-family:'Kalam', cursive; font-size:1.02rem; margin:0 0 8px; color: var(--board-green-2); }
+  .sample-card p{ font-size:0.9rem; margin:0; color:#3d4a37; }
+
+  .method-card{
+    background: var(--board-green); color: var(--chalk);
+    border-radius:10px; padding: 26px 28px; box-shadow: var(--shadow-card);
+    margin-bottom: 22px;
+  }
+  .method-card h3{ font-family:'Kalam', cursive; font-size:1.1rem; margin:0 0 10px; color: var(--sun); }
+  .method-card p{ font-size:0.95rem; line-height:1.7; margin:0 0 10px; color: rgba(247,245,239,0.9); }
+  .method-card p:last-child{ margin-bottom:0; }
+
+  .instrument-note{
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    color:#a9702f; margin-bottom:14px; display:block;
+  }
+  table.instr{
+    width:100%; border-collapse:collapse; font-size:0.85rem;
+    background: var(--card-paper-2); border-radius:8px; overflow:hidden;
+    margin-bottom: 26px;
+  }
+  table.instr th{
+    background: var(--board-green); color: var(--chalk);
+    font-family:'JetBrains Mono', monospace; font-size:0.68rem;
+    text-transform:uppercase; letter-spacing:0.04em;
+    text-align:left; padding:10px 12px;
+  }
+  table.instr td{
+    padding:11px 12px; border-bottom:1px solid rgba(35,48,31,0.1);
+    vertical-align:top; color:#3d4a37;
+  }
+  table.instr tr:last-child td{ border-bottom:none; }
+
+  .qcard{
+    background: var(--card-paper-2); border-radius:8px; padding:14px 16px;
+    margin-bottom:10px; font-size:0.9rem;
+  }
+  .qcard .qtag{
+    font-family:'JetBrains Mono', monospace; font-size:0.65rem;
+    text-transform:uppercase; color: var(--sky); display:block; margin-bottom:4px;
+  }
+
+  footer{
+    background: var(--board-green-2); color: rgba(247,245,239,0.65);
+    padding: 30px 40px 40px; border-radius: 0 0 22px 22px;
+    max-width:1040px; margin:0 auto;
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem; line-height:1.8;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+
+  @media (max-width: 640px){
+    .sample-grid{ grid-template-columns: 1fr; }
+    .section{ padding: 36px 22px; }
+    table.instr{ font-size:0.78rem; }
+    table.instr th, table.instr td{ padding:8px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">match<span>&amp;</span>remember</div>
+    <div class="meta">
+      E-Portfolio · Entry #2<br>
+      Research and Teaching Practicum II · UNIMINUTO
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="eyebrow">week 4 · designing data collection methods</div>
+    <h1>Designing the First Two Data Collection Methods</h1>
+    <p class="lede">
+      Based on the reading on tests, questionnaires, and interviews, this entry
+      explains the sample for the study and presents the two data collection
+      methods designed so far: a vocabulary test and a short perception
+      questionnaire.
+    </p>
+    <div class="nav-links">
+      <a href="index.html">← Entry #1: Front page</a>
+      <a href="entry-3-narrative-field-notes.html">Entry #3: Narrative studies &amp; field notes →</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- SAMPLE -->
+    <section class="section">
+      <div class="eyebrow">01 · sample</div>
+      <h2>Sample of the Project</h2>
+      <p>
+        The study would draw its sample from one third-grade class (students
+        around eight and nine years old) at a Colombian public primary school.
+        Rather than randomly assigning individual students, the intact class
+        would be split into two naturally-occurring groups — a common,
+        non-probability sampling choice in classroom-based research, since
+        schools rarely allow researchers to reshuffle students across sections.
+      </p>
+      <div class="sample-grid">
+        <div class="sample-card">
+          <h3>Group A — Matching game</h3>
+          <p>Practises classroom-object vocabulary through the picture–word
+          matching game during the intervention sessions.</p>
+        </div>
+        <div class="sample-card b">
+          <h3>Group B — Workbook practice</h3>
+          <p>Continues with the regular workbook-based vocabulary activities
+          the teacher already uses.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY THESE TWO METHODS -->
+    <section class="section">
+      <div class="eyebrow">02 · why these two methods</div>
+      <h2>Two Methods, Two Different Jobs</h2>
+      <p>
+        A vocabulary test and a short questionnaire were chosen because the
+        study needs two different kinds of evidence. The test produces
+        comparable numbers — immediate and two-week scores for both groups —
+        which is exactly what the research question asks for. The questionnaire,
+        on the other hand, captures something the test cannot: how practical
+        and easy to use the matching game actually felt to the people who
+        experienced it, which speaks directly to one of the study's specific
+        objectives.
+      </p>
+      <p>
+        In practice, the test would be applied three times (before the
+        intervention, right after it, and two weeks later) to both groups under
+        the same conditions, so scores can be fairly compared. The questionnaire
+        would be applied once, at the end of the intervention, to the teacher
+        and to the students in Group A, to gather quick, low-effort feedback
+        without adding extra class time.
+      </p>
+    </section>
+
+    <!-- INSTRUMENT 1: VOCABULARY TEST -->
+    <section class="section">
+      <div class="eyebrow">03 · instrument 1</div>
+      <h2>Classroom-Object Vocabulary Test</h2>
+      <span class="instrument-note">10 items · picture-to-word matching format · same version used pre-, post-, and delayed</span>
+
+      <table class="instr">
+        <tr>
+          <th style="width:8%">#</th>
+          <th style="width:42%">Picture shown</th>
+          <th style="width:50%">Student writes / circles the matching word</th>
+        </tr>
+        <tr><td>1</td><td>book</td><td>_________________</td></tr>
+        <tr><td>2</td><td>pencil</td><td>_________________</td></tr>
+        <tr><td>3</td><td>chair</td><td>_________________</td></tr>
+        <tr><td>4</td><td>backpack</td><td>_________________</td></tr>
+        <tr><td>5</td><td>desk</td><td>_________________</td></tr>
+        <tr><td>6</td><td>eraser</td><td>_________________</td></tr>
+        <tr><td>7</td><td>notebook</td><td>_________________</td></tr>
+        <tr><td>8</td><td>ruler</td><td>_________________</td></tr>
+        <tr><td>9</td><td>board</td><td>_________________</td></tr>
+        <tr><td>10</td><td>scissors</td><td>_________________</td></tr>
+      </table>
+      <p>
+        Scoring is simple and fast for a third-grade classroom: one point per
+        correctly matched word, for a maximum of 10 points. The same 10 words
+        used in the matching game and in the workbook unit are the ones tested,
+        so the instrument measures exactly what both groups practised.
+      </p>
+    </section>
+
+    <!-- INSTRUMENT 2: QUESTIONNAIRE -->
+    <section class="section">
+      <div class="eyebrow">04 · instrument 2</div>
+      <h2>Short Perception Questionnaire</h2>
+      <span class="instrument-note">two versions: one for the teacher, one (simplified) for students in Group A</span>
+
+      <div class="qcard">
+        <span class="qtag">Teacher — open question</span>
+        How practical was it to include the matching game in your regular class time and materials?
+      </div>
+      <div class="qcard">
+        <span class="qtag">Teacher — open question</span>
+        What difficulties, if any, did you notice while using the game with this group?
+      </div>
+      <div class="qcard">
+        <span class="qtag">Students — simple face-scale question</span>
+        Did you like playing with the picture-word cards? 🙁 😐 🙂
+      </div>
+      <div class="qcard">
+        <span class="qtag">Students — simple face-scale question</span>
+        Was it easy to find the matching word for each picture? 🙁 😐 🙂
+      </div>
+      <p>
+        Keeping the student version to two quick face-scale questions matches
+        the age of the participants and the limited class time available, while
+        the teacher's open questions provide the richer detail needed to judge
+        practicality.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>Research and Teaching Practicum II · UNIMINUTO — Corporación Universitaria Minuto de Dios</div>
+    <div><a href="index.html">Front page</a> · Entry #2</div>
+  </footer>
+
+</body>
+</html>
