@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entry #4 — Ethnography Studies &amp; Focus Group | match&amp;remember</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Lexend:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --board-green:   #2d4a3e;
+    --board-green-2: #23392f;
+    --card-paper:    #f7f4ec;
+    --card-paper-2:  #efe9db;
+    --ink:           #23301f;
+    --coral:         #e2604a;
+    --sun:           #eeb43e;
+    --sky:           #4d94a3;
+    --chalk:         #f7f5ef;
+    --shadow-card: 0 10px 24px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.12);
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    background: var(--board-green);
+    background-image: radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 22px 22px;
+    color: var(--ink);
+    font-family:'Lexend', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color: var(--sun); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase;
+    color: var(--sun); display:flex; align-items:center; gap:0.6em;
+  }
+  .eyebrow::before{ content:""; width:22px; height:1px; background: var(--sun); display:inline-block; }
+
+  .topbar{
+    max-width:1040px; margin:0 auto; padding: 28px 24px 0;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    color: var(--chalk);
+  }
+  .brand{ font-family:'Kalam', cursive; font-weight:700; font-size:1.35rem; line-height:1; }
+  .brand span{ color: var(--sun); }
+  .topbar .meta{
+    text-align:right; font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    color: rgba(247,245,239,0.6); line-height:1.6;
+  }
+  .nav-links{
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    color: rgba(247,245,239,0.75); display:flex; gap:18px; flex-wrap:wrap; margin-top:18px;
+  }
+
+  .hero{ max-width:1040px; margin:0 auto; padding: 40px 24px 56px; color: var(--chalk); }
+  .hero h1{
+    font-family:'Kalam', cursive; font-weight:700;
+    font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+    line-height:1.2; margin: 14px 0 12px; max-width: 26ch;
+  }
+  .hero .lede{ max-width:60ch; font-size:1rem; line-height:1.65; color: rgba(247,245,239,0.82); font-weight:300; }
+
+  main{
+    background: var(--card-paper);
+    border-radius: 22px 22px 0 0;
+    max-width:1040px; margin:0 auto; padding: 8px 0 0;
+    box-shadow: 0 -18px 50px rgba(0,0,0,0.25);
+  }
+  .section{ padding: 48px 40px; border-bottom: 1px dashed rgba(35,48,31,0.16); }
+  .section:last-of-type{ border-bottom:none; }
+  .section .eyebrow{ color:#a9702f; }
+  .section .eyebrow::before{ background:#a9702f; }
+  .section h2{ font-family:'Kalam', cursive; font-size:1.45rem; margin: 10px 0 20px; color: var(--board-green-2); }
+  .section p{ line-height:1.7; margin: 0 0 14px; }
+  .section p:last-child{ margin-bottom:0; }
+
+  .verdict{
+    display:flex; gap:16px; align-items:flex-start;
+    background: var(--card-paper-2); border-left:3px solid var(--coral);
+    border-radius:8px; padding:18px 22px; margin-bottom:22px;
+  }
+  .verdict .tag{
+    flex:none; font-family:'JetBrains Mono', monospace; font-size:0.65rem;
+    text-transform:uppercase; letter-spacing:0.06em; color: var(--coral);
+    background: rgba(226,96,74,0.1); border:1px solid rgba(226,96,74,0.3);
+    padding:4px 10px; border-radius:20px; margin-top:2px;
+  }
+  .verdict p{ margin:0; }
+
+  .sample-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+  .sample-card{ background: var(--card-paper-2); border-radius:8px; padding:20px; border-top:3px solid var(--sky); }
+  .sample-card.b{ border-top-color: var(--sun); }
+  .sample-card h3{ font-family:'Kalam', cursive; font-size:1.02rem; margin:0 0 8px; color: var(--board-green-2); }
+  .sample-card p{ font-size:0.9rem; margin:0; color:#3d4a37; }
+
+  .method-card{
+    background: var(--board-green); color: var(--chalk);
+    border-radius:10px; padding: 26px 28px; box-shadow: var(--shadow-card);
+    margin-bottom: 22px;
+  }
+  .method-card h3{ font-family:'Kalam', cursive; font-size:1.1rem; margin:0 0 10px; color: var(--sun); }
+  .method-card p{ font-size:0.95rem; line-height:1.7; margin:0 0 10px; color: rgba(247,245,239,0.9); }
+  .method-card p:last-child{ margin-bottom:0; }
+
+  .instrument-note{
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    color:#a9702f; margin-bottom:14px; display:block;
+  }
+  .fg-meta{
+    display:grid; grid-template-columns: repeat(4,1fr); gap:10px;
+    margin-bottom:20px;
+  }
+  .fg-meta div{
+    background: var(--card-paper-2); border-radius:6px; padding:10px 12px;
+    font-size:0.78rem; color:#3d4a37;
+  }
+  .fg-meta span{
+    display:block; font-family:'JetBrains Mono', monospace; font-size:0.62rem;
+    text-transform:uppercase; color: var(--sky); margin-bottom:4px;
+  }
+  .qcard{
+    background: var(--card-paper-2); border-radius:8px; padding:14px 16px;
+    margin-bottom:10px; font-size:0.9rem; border-left:3px solid var(--sky);
+  }
+  .qcard .qnum{
+    font-family:'JetBrains Mono', monospace; font-size:0.65rem;
+    text-transform:uppercase; color: var(--sky); display:block; margin-bottom:4px;
+  }
+  .ethics-note{
+    background: var(--card-paper-2); border-left:3px solid var(--sun);
+    border-radius:8px; padding:16px 20px; margin-top:22px; font-size:0.88rem;
+    color:#3d4a37; line-height:1.6;
+  }
+  .ethics-note .tag{
+    font-family:'JetBrains Mono', monospace; font-size:0.65rem;
+    text-transform:uppercase; letter-spacing:0.05em; color:#a9702f;
+    display:block; margin-bottom:6px;
+  }
+
+  footer{
+    background: var(--board-green-2); color: rgba(247,245,239,0.65);
+    padding: 30px 40px 40px; border-radius: 0 0 22px 22px;
+    max-width:1040px; margin:0 auto;
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem; line-height:1.8;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+
+  @media (max-width: 640px){
+    .sample-grid{ grid-template-columns: 1fr; }
+    .fg-meta{ grid-template-columns: 1fr 1fr; }
+    .section{ padding: 36px 22px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">match<span>&amp;</span>remember</div>
+    <div class="meta">
+      E-Portfolio · Entry #4<br>
+      Research and Teaching Practicum II · UNIMINUTO
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="eyebrow">week 8 · designing and justifying data collection methods — ethnography</div>
+    <h1>Ethnographic Studies and a Focus Group Instrument</h1>
+    <p class="lede">
+      This entry weighs ethnography against the needs of the matching-game study,
+      revisits the field notes method chosen in Entry #3, and introduces a short
+      focus group designed to hear the students' own voices about the game.
+    </p>
+    <div class="nav-links">
+      <a href="entry-3-narrative-field-notes.html">← Entry #3: Narrative studies &amp; field notes</a>
+      <a href="index.html">Front page</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ETHNOGRAPHY RATIONALE -->
+    <section class="section">
+      <div class="eyebrow">01 · ethnographic studies: useful or not?</div>
+      <h2>Why Full Ethnography Is Not the Core Design — But a Small Piece Fits</h2>
+
+      <div class="verdict">
+        <span class="tag">Not the main design</span>
+        <p>
+          Classic ethnography asks a researcher to spend an extended time immersed
+          in a group — often months — to build a thick, detailed description of a
+          whole classroom culture: its routines, relationships, and unwritten
+          rules. This study runs over a few weeks and asks a narrower, comparative
+          question (does the matching game beat workbook practice on vocabulary
+          scores), so a full ethnographic design would be a poor match for its
+          scope and timeline.
+        </p>
+      </div>
+
+      <p>
+        Even so, one ethnographic-style tool still earns a place here: the focus
+        group. It is a light, one-time way to hear students describe the
+        activity in their own words — something neither the vocabulary test nor
+        the teacher's field notes can capture directly. Used this way, it does
+        not turn the study into an ethnography; it simply borrows one of
+        ethnography's tools to enrich the objective on student perceptions of
+        the game.
+      </p>
+    </section>
+
+    <!-- SAMPLE -->
+    <section class="section">
+      <div class="eyebrow">02 · possible sample</div>
+      <h2>Who Would Take Part in the Focus Group</h2>
+      <p>
+        Rather than involving the whole class, the focus group would be kept
+        small on purpose — around five to six volunteer students from Group A
+        (the matching-game group). Small groups work better with children this
+        age: everyone gets a turn to speak, the conversation stays manageable
+        for one adult to guide, and shy students are less likely to be talked
+        over than in a full-class discussion.
+      </p>
+      <div class="sample-grid">
+        <div class="sample-card">
+          <h3>Who</h3>
+          <p>5–6 students from Group A, chosen voluntarily, with parental/guardian consent already on file.</p>
+        </div>
+        <div class="sample-card b">
+          <h3>When</h3>
+          <p>Once, right after the last matching-game session — while the experience is still fresh.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVISITING THE CHOSEN METHOD -->
+    <section class="section">
+      <div class="eyebrow">03 · revisiting the chosen method</div>
+      <h2>Field Notes, and Why a Focus Group Adds to Them</h2>
+      <div class="method-card">
+        <p>
+          The data collection method designed in the previous session was
+          classroom observation through field notes, chosen because vocabulary
+          test scores show <em>whether</em> learning happened but not what the
+          activity actually looked like while students were doing it. Field
+          notes let the teacher-researcher record attention, participation, and
+          small moments of struggle or success, session by session, building a
+          running account that supports the test results and feeds the
+          objective on teacher and student perceptions.
+        </p>
+        <p>
+          What field notes cannot do is capture the students' own account in
+          their own words — that observation is always filtered through the
+          adult observer. The focus group closes that gap: a short, guided
+          conversation where the students themselves describe what they liked,
+          found hard, or remembered, adding a participant-voiced layer to the
+          teacher's observational one.
+        </p>
+      </div>
+    </section>
+
+    <!-- DESIGNED INSTRUMENT -->
+    <section class="section">
+      <div class="eyebrow">04 · designed instrument</div>
+      <h2>Focus Group Guide</h2>
+      <span class="instrument-note">one session · Group A volunteers · led by the teacher-researcher</span>
+
+      <div class="fg-meta">
+        <div><span>Group size</span>5–6 students</div>
+        <div><span>Duration</span>~15 minutes</div>
+        <div><span>Setting</span>Familiar classroom corner</div>
+        <div><span>Format</span>Open, guided talk</div>
+      </div>
+
+      <div class="qcard">
+        <span class="qnum">Warm-up</span>
+        Show me with your hand — did you like playing with the picture cards? 👍 👎
+      </div>
+      <div class="qcard">
+        <span class="qnum">Question 1</span>
+        What was your favorite part of the matching game?
+      </div>
+      <div class="qcard">
+        <span class="qnum">Question 2</span>
+        Was there anything that felt hard or confusing while you were playing?
+      </div>
+      <div class="qcard">
+        <span class="qnum">Question 3</span>
+        Can you remember one of the new words? Can you show me the picture that goes with it?
+      </div>
+      <div class="qcard">
+        <span class="qnum">Question 4</span>
+        Would you like to play this game again with other words, like animals or food?
+      </div>
+
+      <div class="ethics-note">
+        <span class="tag">Ethical note</span>
+        Because participants are young children, the focus group would run only
+        with prior parental/guardian consent and the children's own simple
+        assent, use plain and friendly language, and record only written notes
+        of what is said rather than audio or video of the children themselves —
+        in line with the informed-consent and anti-plagiarism principles
+        covered earlier in this course.
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>Research and Teaching Practicum II · UNIMINUTO — Corporación Universitaria Minuto de Dios</div>
+    <div><a href="index.html">Front page</a> · Entry #4</div>
+  </footer>
+
+</body>
+</html>
