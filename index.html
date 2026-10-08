@@ -385,6 +385,50 @@
   @media (prefers-reduced-motion: reduce){
     *{ transition:none !important; scroll-behavior:auto !important; }
   }
+
+  .site-nav{
+    max-width:1040px; margin:0 auto; padding: 16px 24px 0;
+    display:flex; gap:10px; flex-wrap:wrap;
+  }
+  .site-nav a{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    color: rgba(247,245,239,0.85);
+    background: rgba(247,245,239,0.08);
+    border:1px solid rgba(247,245,239,0.25);
+    padding:7px 14px;
+    border-radius:20px;
+    text-decoration:none;
+  }
+  .site-nav a:hover{ background: rgba(247,245,239,0.18); text-decoration:none; }
+  .site-nav a.active{
+    background: var(--sun);
+    color: var(--board-green-2);
+    border-color: var(--sun);
+    font-weight:600;
+  }
+  .entry-pager{
+    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+  .pager-btn{
+    flex:1; min-width:220px;
+    font-family:'Lexend', sans-serif;
+    font-size:0.92rem; font-weight:500;
+    color: var(--board-green-2);
+    background: var(--card-paper-2);
+    border:1px solid rgba(45,74,62,0.2);
+    border-radius:8px;
+    padding:16px 20px;
+    text-decoration:none;
+    display:flex; align-items:center; gap:8px;
+  }
+  .pager-btn:hover{ background:#e4ddc9; text-decoration:none; }
+  .pager-btn.next{ justify-content:flex-end; text-align:right; margin-left:auto; }
+  @media (max-width:640px){
+    .pager-btn{ min-width:100%; }
+  }
 </style>
 </head>
 <body>
@@ -397,6 +441,13 @@
     </div>
   </div>
 
+  <nav class="site-nav">
+    <a href="index.html" class="active">Entry 1 · Front Page</a>
+    <a href="entry-2-data-collection-methods.html" class="">Entry 2 · Data Collection</a>
+    <a href="entry-3-narrative-field-notes.html" class="">Entry 3 · Narrative &amp; Field Notes</a>
+    <a href="entry-4-ethnography-focus-group.html" class="">Entry 4 · Ethnography &amp; Focus Group</a>
+  </nav>
+
   <header class="hero">
     <div class="eyebrow">front page · research profile &amp; proposal summary</div>
     <h1>Using a Picture-Word Matching Game to Improve Classroom Vocabulary Learning in Colombian Third Graders</h1>
@@ -405,9 +456,6 @@
       third graders in a Colombian public primary school learn — and actually remember —
       everyday classroom-object vocabulary in English.
     </p>
-    <div class="nav-links">
-      <a href="entry-2-data-collection-methods.html">Entry #2: Data collection methods →</a>
-    </div>
 
     <div class="board" aria-hidden="true">
       <div class="pair">
@@ -532,6 +580,14 @@
           <h3>Research &amp; feasibility</h3>
           <p>Few studies test a single, non-digital game under real Colombian public-school conditions. Simple materials and short tests make this project realistic for the researcher and the school alike.</p>
         </div>
+      </div>
+    </section>
+
+  
+    <section class="section pager-section" style="border-bottom:none;">
+      <div class="entry-pager">
+        
+        <a class="pager-btn next" href="entry-2-data-collection-methods.html">Entry #2: Data Collection Methods →</a>
       </div>
     </section>
 
