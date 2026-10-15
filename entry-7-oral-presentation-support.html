@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entry #7 — Oral Presentation Support | match&amp;remember</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Lexend:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --board-green:   #2d4a3e;
+    --board-green-2: #23392f;
+    --card-paper:    #f7f4ec;
+    --card-paper-2:  #efe9db;
+    --ink:           #23301f;
+    --coral:         #e2604a;
+    --sun:           #eeb43e;
+    --sky:           #4d94a3;
+    --chalk:         #f7f5ef;
+    --shadow-card: 0 10px 24px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.12);
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    background: var(--board-green);
+    background-image: radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 22px 22px;
+    color: var(--ink);
+    font-family:'Lexend', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color: var(--sun); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase;
+    color: var(--sun); display:flex; align-items:center; gap:0.6em;
+  }
+  .eyebrow::before{ content:""; width:22px; height:1px; background: var(--sun); display:inline-block; }
+
+  .topbar{
+    max-width:1040px; margin:0 auto; padding: 28px 24px 0;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    color: var(--chalk);
+  }
+  .brand{ font-family:'Kalam', cursive; font-weight:700; font-size:1.35rem; line-height:1; }
+  .brand span{ color: var(--sun); }
+  .topbar .meta{
+    text-align:right; font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    color: rgba(247,245,239,0.6); line-height:1.6;
+  }
+
+  .site-nav{
+    max-width:1040px; margin:0 auto; padding: 16px 24px 0;
+    display:flex; gap:10px; flex-wrap:wrap;
+  }
+  .site-nav a{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    color: rgba(247,245,239,0.85);
+    background: rgba(247,245,239,0.08);
+    border:1px solid rgba(247,245,239,0.25);
+    padding:7px 14px;
+    border-radius:20px;
+    text-decoration:none;
+  }
+  .site-nav a:hover{ background: rgba(247,245,239,0.18); text-decoration:none; }
+  .site-nav a.active{
+    background: var(--sun);
+    color: var(--board-green-2);
+    border-color: var(--sun);
+    font-weight:600;
+  }
+  .entry-pager{
+    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+  .pager-btn{
+    flex:1; min-width:220px;
+    font-family:'Lexend', sans-serif;
+    font-size:0.92rem; font-weight:500;
+    color: var(--board-green-2);
+    background: var(--card-paper-2);
+    border:1px solid rgba(45,74,62,0.2);
+    border-radius:8px;
+    padding:16px 20px;
+    text-decoration:none;
+    display:flex; align-items:center; gap:8px;
+  }
+  .pager-btn:hover{ background:#e4ddc9; text-decoration:none; }
+  .pager-btn.next{ justify-content:flex-end; text-align:right; margin-left:auto; }
+  @media (max-width:640px){ .pager-btn{ min-width:100%; } }
+
+  .hero{ max-width:1040px; margin:0 auto; padding: 32px 24px 56px; color: var(--chalk); }
+  .hero h1{
+    font-family:'Kalam', cursive; font-weight:700;
+    font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+    line-height:1.2; margin: 14px 0 12px; max-width: 28ch;
+  }
+  .hero .lede{ max-width:60ch; font-size:1rem; line-height:1.65; color: rgba(247,245,239,0.82); font-weight:300; }
+
+  main{
+    background: var(--card-paper);
+    border-radius: 22px 22px 0 0;
+    max-width:1040px; margin:0 auto; padding: 8px 0 0;
+    box-shadow: 0 -18px 50px rgba(0,0,0,0.25);
+  }
+  .section{ padding: 48px 40px; border-bottom: 1px dashed rgba(35,48,31,0.16); }
+  .section:last-of-type{ border-bottom:none; }
+  .section .eyebrow{ color:#a9702f; }
+  .section .eyebrow::before{ background:#a9702f; }
+  .section h2{ font-family:'Kalam', cursive; font-size:1.45rem; margin: 10px 0 20px; color: var(--board-green-2); }
+  .section p{ line-height:1.7; margin: 0 0 14px; }
+  .section p:last-child{ margin-bottom:0; }
+
+  .instrument-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:18px; }
+  .instrument-card{
+    background: var(--board-green); color: var(--chalk);
+    border-radius:10px; padding:22px 24px; box-shadow: var(--shadow-card);
+  }
+  .instrument-card h3{ font-family:'Kalam', cursive; font-size:1.05rem; margin:0 0 8px; color: var(--sun); }
+  .instrument-card p{ font-size:0.88rem; line-height:1.6; margin:0; color: rgba(247,245,239,0.88); }
+  .instrument-card .src{
+    display:block; margin-top:10px; font-family:'JetBrains Mono', monospace;
+    font-size:0.65rem; text-transform:uppercase; color: rgba(247,245,239,0.55);
+  }
+
+  .meta-row{
+    display:grid; grid-template-columns: repeat(3,1fr); gap:12px; margin-bottom:22px;
+  }
+  .meta-row div{
+    background: var(--card-paper-2); border-radius:6px; padding:12px 14px;
+  }
+  .meta-row span{
+    display:block; font-family:'JetBrains Mono', monospace; font-size:0.62rem;
+    text-transform:uppercase; color: var(--sky); margin-bottom:4px;
+  }
+  .meta-row p{ margin:0; font-size:0.85rem; color:#3d4a37; }
+
+  .placeholder-field{
+    width:100%;
+    font-family:'Lexend', sans-serif;
+    font-size:0.92rem;
+    color: var(--ink);
+    background: var(--card-paper-2);
+    border:1px solid rgba(45,74,62,0.2);
+    border-left:3px solid var(--coral);
+    border-radius:4px;
+    padding:12px 14px;
+    line-height:1.6;
+    resize:vertical;
+  }
+  .field-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.68rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:#a9702f;
+    margin: 18px 0 6px;
+    display:block;
+  }
+  .field-label:first-child{ margin-top:0; }
+
+  footer{
+    background: var(--board-green-2); color: rgba(247,245,239,0.65);
+    padding: 30px 40px 40px; border-radius: 0 0 22px 22px;
+    max-width:1040px; margin:0 auto;
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem; line-height:1.8;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+
+  @media (max-width: 640px){
+    .instrument-grid{ grid-template-columns: 1fr; }
+    .meta-row{ grid-template-columns: 1fr; }
+    .section{ padding: 36px 22px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">match<span>&amp;</span>remember</div>
+    <div class="meta">
+      E-Portfolio · Entry #7<br>
+      Research and Teaching Practicum II · UNIMINUTO
+    </div>
+  </div>
+
+  <nav class="site-nav">
+    <a href="index.html">Entry 1 · Front Page</a>
+    <a href="entry-2-data-collection-methods.html">Entry 2 · Data Collection</a>
+    <a href="entry-3-narrative-field-notes.html">Entry 3 · Narrative &amp; Field Notes</a>
+    <a href="entry-4-ethnography-focus-group.html">Entry 4 · Ethnography &amp; Focus Group</a>
+    <a href="entry-5-experimental-method.html">Entry 5 · Experimental Method</a>
+    <a href="entry-6-quasi-experimental.html">Entry 6 · Quasi-Experimental</a>
+    <a href="entry-7-oral-presentation-support.html" class="active">Entry 7 · Oral Presentation</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">week 11 · second term evaluation — oral presentation (exam, 15%)</div>
+    <h1>Oral Presentation Support: Two Applied Data Collection Instruments</h1>
+    <p class="lede">
+      This page gathers, in one place, the two instruments selected for the
+      Week 11 oral presentation — the design method behind them, how and when
+      each was applied, and the evidence to bring to the session.
+    </p>
+  </header>
+
+  <main>
+
+    <!-- DESIGN METHOD & AUTHORS -->
+    <section class="section">
+      <div class="eyebrow">01 · design method(s) and authors</div>
+      <h2>Overall Design</h2>
+      <p>
+        This study follows a <strong>quasi-experimental, nonequivalent comparison
+        group design</strong> (Burke &amp; Christensen, 2014), comparing two
+        intact third-grade groups — matching game versus workbook practice —
+        without random assignment, supported by a pretest to check initial
+        group equivalence. Its quantitative core is complemented with
+        qualitative tools inspired by observational and ethnographic practice
+        (classroom field notes and a short focus group), in line with the
+        mixed, low-cost approach justified since Entry #1.
+      </p>
+    </section>
+
+    <!-- TWO INSTRUMENTS SELECTED -->
+    <section class="section">
+      <div class="eyebrow">02 · the two instruments selected for this presentation</div>
+      <h2>Instruments Applied</h2>
+
+      <div class="instrument-grid">
+        <div class="instrument-card">
+          <h3>1. Vocabulary Test</h3>
+          <p>
+            The 10-item picture-to-word test (Entry #2), applied pre-, post-,
+            and two weeks later to both groups. Chosen because it directly
+            answers the research question: whether the matching game improves
+            immediate learning and retention compared with workbook practice.
+          </p>
+          <span class="src">Designed in Entry #2 · applied per Entry #6's design</span>
+        </div>
+        <div class="instrument-card">
+          <h3>2. Classroom Field Notes</h3>
+          <p>
+            The observation template (Entry #3), completed once per session for
+            each group. Chosen because it captures how the activity actually
+            unfolded — attention, participation, use of the target words —
+            something the test scores alone cannot show.
+          </p>
+          <span class="src">Designed in Entry #3</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW / WHERE / WHEN -->
+    <section class="section">
+      <div class="eyebrow">03 · how, where, and when</div>
+      <h2>Application Details</h2>
+      <div class="meta-row">
+        <div><span>Where</span><p>Target third-grade classroom, public primary school</p></div>
+        <div><span>Who applied it</span><p>Teacher-researcher (Dylan)</p></div>
+        <div><span>Groups</span><p>Group A (matching game) &amp; Group B (workbook)</p></div>
+      </div>
+      <span class="field-label">Exact dates / sessions (fill in once scheduled with the school)</span>
+      <textarea class="placeholder-field" rows="3" placeholder="[e.g. Vocabulary pretest applied on __; intervention sessions held on __, __, __; immediate posttest on __; delayed posttest two weeks later on __.]"></textarea>
+    </section>
+
+    <!-- FINDINGS -->
+    <section class="section">
+      <div class="eyebrow">04 · findings</div>
+      <h2>What the Data Showed</h2>
+      <span class="field-label">Vocabulary test results (fill in after scoring)</span>
+      <textarea class="placeholder-field" rows="4" placeholder="[Summarize the pretest, immediate posttest, and delayed posttest scores for both groups — did the matching-game group score higher on immediate learning and/or retention?]"></textarea>
+      <span class="field-label">Field notes patterns (fill in after reviewing the notes)</span>
+      <textarea class="placeholder-field" rows="4" placeholder="[Summarize what the field notes showed about engagement and participation in each group across sessions.]"></textarea>
+    </section>
+
+    <!-- CHALLENGES -->
+    <section class="section">
+      <div class="eyebrow">05 · challenges faced</div>
+      <h2>What Was Difficult</h2>
+      <textarea class="placeholder-field" rows="4" placeholder="[e.g. scheduling the sessions around limited English class time, keeping both groups' conditions comparable, managing the test with young children, coordinating the mandatory tutoring feedback into the final instrument design...]"></textarea>
+    </section>
+
+    <!-- EVIDENCE -->
+    <section class="section">
+      <div class="eyebrow">06 · evidence to attach</div>
+      <h2>Supporting Evidence</h2>
+      <p>Bring to the presentation (or attach here as scanned/photographed files once available):</p>
+      <span class="field-label">Evidence checklist</span>
+      <textarea class="placeholder-field" rows="4" placeholder="☐ Completed vocabulary test sheets (sample from each group)
+☐ Completed field notes sheets
+☐ Photos of the matching-game cards / session in use
+☐ Any completed focus-group notes, if used as supporting evidence"></textarea>
+    </section>
+
+    <!-- PAGER -->
+    <section class="section" style="border-bottom:none;">
+      <div class="entry-pager">
+        <a class="pager-btn prev" href="entry-6-quasi-experimental.html">← Entry #6: Quasi-Experimental Designs</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>Research and Teaching Practicum II · UNIMINUTO — Corporación Universitaria Minuto de Dios</div>
+    <div><a href="index.html">Front page</a> · Entry #7</div>
+  </footer>
+
+</body>
+</html>

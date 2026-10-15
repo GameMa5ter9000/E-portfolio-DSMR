@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entry #6 — Quasi-Experimental Design | match&amp;remember</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Lexend:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --board-green:   #2d4a3e;
+    --board-green-2: #23392f;
+    --card-paper:    #f7f4ec;
+    --card-paper-2:  #efe9db;
+    --ink:           #23301f;
+    --coral:         #e2604a;
+    --sun:           #eeb43e;
+    --sky:           #4d94a3;
+    --chalk:         #f7f5ef;
+    --shadow-card: 0 10px 24px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.12);
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    background: var(--board-green);
+    background-image: radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 22px 22px;
+    color: var(--ink);
+    font-family:'Lexend', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color: var(--sun); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase;
+    color: var(--sun); display:flex; align-items:center; gap:0.6em;
+  }
+  .eyebrow::before{ content:""; width:22px; height:1px; background: var(--sun); display:inline-block; }
+
+  .topbar{
+    max-width:1040px; margin:0 auto; padding: 28px 24px 0;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    color: var(--chalk);
+  }
+  .brand{ font-family:'Kalam', cursive; font-weight:700; font-size:1.35rem; line-height:1; }
+  .brand span{ color: var(--sun); }
+  .topbar .meta{
+    text-align:right; font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    color: rgba(247,245,239,0.6); line-height:1.6;
+  }
+
+  .site-nav{
+    max-width:1040px; margin:0 auto; padding: 16px 24px 0;
+    display:flex; gap:10px; flex-wrap:wrap;
+  }
+  .site-nav a{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    color: rgba(247,245,239,0.85);
+    background: rgba(247,245,239,0.08);
+    border:1px solid rgba(247,245,239,0.25);
+    padding:7px 14px;
+    border-radius:20px;
+    text-decoration:none;
+  }
+  .site-nav a:hover{ background: rgba(247,245,239,0.18); text-decoration:none; }
+  .site-nav a.active{
+    background: var(--sun);
+    color: var(--board-green-2);
+    border-color: var(--sun);
+    font-weight:600;
+  }
+  .entry-pager{
+    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+  .pager-btn{
+    flex:1; min-width:220px;
+    font-family:'Lexend', sans-serif;
+    font-size:0.92rem; font-weight:500;
+    color: var(--board-green-2);
+    background: var(--card-paper-2);
+    border:1px solid rgba(45,74,62,0.2);
+    border-radius:8px;
+    padding:16px 20px;
+    text-decoration:none;
+    display:flex; align-items:center; gap:8px;
+  }
+  .pager-btn:hover{ background:#e4ddc9; text-decoration:none; }
+  .pager-btn.next{ justify-content:flex-end; text-align:right; margin-left:auto; }
+  @media (max-width:640px){ .pager-btn{ min-width:100%; } }
+
+  .hero{ max-width:1040px; margin:0 auto; padding: 32px 24px 56px; color: var(--chalk); }
+  .hero h1{
+    font-family:'Kalam', cursive; font-weight:700;
+    font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+    line-height:1.2; margin: 14px 0 12px; max-width: 28ch;
+  }
+  .hero .lede{ max-width:60ch; font-size:1rem; line-height:1.65; color: rgba(247,245,239,0.82); font-weight:300; }
+
+  main{
+    background: var(--card-paper);
+    border-radius: 22px 22px 0 0;
+    max-width:1040px; margin:0 auto; padding: 8px 0 0;
+    box-shadow: 0 -18px 50px rgba(0,0,0,0.25);
+  }
+  .section{ padding: 48px 40px; border-bottom: 1px dashed rgba(35,48,31,0.16); }
+  .section:last-of-type{ border-bottom:none; }
+  .section .eyebrow{ color:#a9702f; }
+  .section .eyebrow::before{ background:#a9702f; }
+  .section h2{ font-family:'Kalam', cursive; font-size:1.45rem; margin: 10px 0 20px; color: var(--board-green-2); }
+  .section p{ line-height:1.7; margin: 0 0 14px; }
+  .section p:last-child{ margin-bottom:0; }
+
+  .verdict{
+    display:flex; gap:16px; align-items:flex-start;
+    background: var(--card-paper-2); border-left:3px solid var(--sun);
+    border-radius:8px; padding:18px 22px; margin-bottom:22px;
+  }
+  .verdict .tag{
+    flex:none; font-family:'JetBrains Mono', monospace; font-size:0.65rem;
+    text-transform:uppercase; letter-spacing:0.06em; color:#a9702f;
+    background: rgba(238,180,62,0.18); border:1px solid rgba(238,180,62,0.45);
+    padding:4px 10px; border-radius:20px; margin-top:2px;
+  }
+  .verdict p{ margin:0; }
+
+  .instrument-note{
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    color:#a9702f; margin-bottom:14px; display:block;
+  }
+  .timeline{ display:flex; flex-direction:column; gap:10px; }
+  .tl-step{
+    display:flex; gap:14px; align-items:flex-start;
+    background: var(--card-paper-2); border-radius:8px; padding:14px 18px;
+  }
+  .tl-num{
+    flex:none; width:28px; height:28px; border-radius:50%;
+    background: var(--sun); color: var(--board-green-2);
+    font-family:'JetBrains Mono', monospace; font-size:0.75rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .tl-step p{ margin:0; font-size:0.9rem; color:#3d4a37; }
+  .tl-step .grp{
+    font-family:'JetBrains Mono', monospace; font-size:0.65rem;
+    text-transform:uppercase; color: var(--sky); display:block; margin-bottom:4px;
+  }
+
+  .qcard{
+    background: var(--card-paper-2); border-radius:8px; padding:16px 18px;
+    margin-bottom:12px; font-size:0.9rem; border-left:3px solid var(--sun);
+  }
+  .qcard .qlabel{
+    font-family:'JetBrains Mono', monospace; font-size:0.65rem;
+    text-transform:uppercase; color:#a9702f; display:block; margin-bottom:6px;
+  }
+  .qcard .answer{ color:#3d4a37; margin:0; }
+
+  footer{
+    background: var(--board-green-2); color: rgba(247,245,239,0.65);
+    padding: 30px 40px 40px; border-radius: 0 0 22px 22px;
+    max-width:1040px; margin:0 auto;
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem; line-height:1.8;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+
+  @media (max-width: 640px){
+    .section{ padding: 36px 22px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">match<span>&amp;</span>remember</div>
+    <div class="meta">
+      E-Portfolio · Entry #6<br>
+      Research and Teaching Practicum II · UNIMINUTO
+    </div>
+  </div>
+
+  <nav class="site-nav">
+    <a href="index.html">Entry 1 · Front Page</a>
+    <a href="entry-2-data-collection-methods.html">Entry 2 · Data Collection</a>
+    <a href="entry-3-narrative-field-notes.html">Entry 3 · Narrative &amp; Field Notes</a>
+    <a href="entry-4-ethnography-focus-group.html">Entry 4 · Ethnography &amp; Focus Group</a>
+    <a href="entry-5-experimental-method.html">Entry 5 · Experimental Method</a>
+    <a href="entry-6-quasi-experimental.html" class="active">Entry 6 · Quasi-Experimental</a>
+    <a href="entry-7-oral-presentation-support.html">Entry 7 · Oral Presentation</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">week 10 · designing and justifying data collection methods — quasi-experimental designs</div>
+    <h1>A Nonequivalent Comparison Group Design — This Study's Real Model</h1>
+    <p class="lede">
+      Where the true experiment fell short, the quasi-experimental,
+      nonequivalent comparison group design fits perfectly. This entry lays
+      out the actual design this study will use, and works through the
+      guiding questions on causal inference and design features.
+    </p>
+  </header>
+
+  <main>
+
+    <!-- USEFULNESS VERDICT -->
+    <section class="section">
+      <div class="eyebrow">01 · quasi-experimental design: useful or not?</div>
+      <h2>Yes — This Is the Design the Study Has Been Building Toward</h2>
+
+      <div class="verdict">
+        <span class="tag">Core design</span>
+        <p>
+          A nonequivalent comparison group design compares two or more
+          intact, pre-existing groups instead of randomly assigned ones — which
+          is exactly the situation in this study: one class, already split into
+          its own natural groups, with no way to reshuffle students. Adding a
+          pretest to check how similar the groups are before the intervention
+          gives the comparison real strength, even without randomization.
+        </p>
+      </div>
+      <p>
+        This confirms what Entries #1 and #2 already assumed: the matching-game
+        group and the workbook group are compared as they naturally exist, not
+        as randomly formed conditions — which makes this, formally, a
+        quasi-experimental, nonequivalent comparison group design.
+      </p>
+    </section>
+
+    <!-- SAMPLE PROJECT -->
+    <section class="section">
+      <div class="eyebrow">02 · sample project</div>
+      <h2>The Design, Step by Step</h2>
+      <span class="instrument-note">the design actually used in this study</span>
+
+      <div class="timeline">
+        <div class="tl-step">
+          <div class="tl-num">1</div>
+          <p><span class="grp">Both groups</span>Apply the 10-item vocabulary pretest (Entry #2) to confirm the two intact groups start out roughly equivalent.</p>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">2</div>
+          <p><span class="grp">Group A vs. Group B</span>Run the two-week intervention: Group A practises with the picture-word matching game, Group B continues with workbook-based practice.</p>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">3</div>
+          <p><span class="grp">Both groups</span>Apply the same test immediately after the intervention to measure immediate learning.</p>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">4</div>
+          <p><span class="grp">Both groups</span>Apply the test again two weeks later to measure retention, and compare both groups' gains.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GUIDING QUESTIONS -->
+    <section class="section">
+      <div class="eyebrow">03 · guiding questions</div>
+      <h2>Understanding Quasi-Experimental Designs</h2>
+
+      <div class="qcard">
+        <span class="qlabel">What are the requirements for a valid causal inference in a quasi-experimental design?</span>
+        <p class="answer">Without random assignment, a valid causal inference depends on a pretest that shows the groups started out reasonably equivalent, a comparison group that experiences the same timing and testing conditions, and careful attention to threats like history, maturation, or selection bias that could explain a difference in outcomes besides the treatment itself.</p>
+      </div>
+
+      <div class="qcard">
+        <span class="qlabel">What is a nonequivalent comparison group design, and what are its main characteristics?</span>
+        <p class="answer">It is a design that compares two or more intact, pre-existing groups rather than randomly assigned ones. Its main characteristics are the lack of random assignment, the use of a pretest to check for initial group differences, and reliance on statistical or design-based reasoning — rather than randomization — to argue that the treatment, not some other factor, explains the results.</p>
+      </div>
+
+      <div class="qcard">
+        <span class="qlabel">What are the main design features of an interrupted time-series design?</span>
+        <p class="answer">An interrupted time-series design follows a single group with repeated measurements taken at multiple points before and after an intervention, rather than comparing it to a separate group. The "interruption" is the treatment itself, and the design looks for a visible change in the trend line right after that point — it needs several data points on each side to tell a real change from normal variation.</p>
+      </div>
+    </section>
+
+    <!-- PAGER -->
+    <section class="section" style="border-bottom:none;">
+      <div class="entry-pager">
+        <a class="pager-btn prev" href="entry-5-experimental-method.html">← Entry #5: Experimental Method</a>
+        <a class="pager-btn next" href="entry-7-oral-presentation-support.html">Entry #7: Oral Presentation Support →</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>Research and Teaching Practicum II · UNIMINUTO — Corporación Universitaria Minuto de Dios</div>
+    <div><a href="index.html">Front page</a> · Entry #6</div>
+  </footer>
+
+</body>
+</html>

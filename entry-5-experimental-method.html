@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entry #5 — Experimental Methods | match&amp;remember</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Lexend:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --board-green:   #2d4a3e;
+    --board-green-2: #23392f;
+    --card-paper:    #f7f4ec;
+    --card-paper-2:  #efe9db;
+    --ink:           #23301f;
+    --coral:         #e2604a;
+    --sun:           #eeb43e;
+    --sky:           #4d94a3;
+    --chalk:         #f7f5ef;
+    --shadow-card: 0 10px 24px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.12);
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    background: var(--board-green);
+    background-image: radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 22px 22px;
+    color: var(--ink);
+    font-family:'Lexend', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color: var(--sun); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase;
+    color: var(--sun); display:flex; align-items:center; gap:0.6em;
+  }
+  .eyebrow::before{ content:""; width:22px; height:1px; background: var(--sun); display:inline-block; }
+
+  .topbar{
+    max-width:1040px; margin:0 auto; padding: 28px 24px 0;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    color: var(--chalk);
+  }
+  .brand{ font-family:'Kalam', cursive; font-weight:700; font-size:1.35rem; line-height:1; }
+  .brand span{ color: var(--sun); }
+  .topbar .meta{
+    text-align:right; font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    color: rgba(247,245,239,0.6); line-height:1.6;
+  }
+
+  .site-nav{
+    max-width:1040px; margin:0 auto; padding: 16px 24px 0;
+    display:flex; gap:10px; flex-wrap:wrap;
+  }
+  .site-nav a{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    color: rgba(247,245,239,0.85);
+    background: rgba(247,245,239,0.08);
+    border:1px solid rgba(247,245,239,0.25);
+    padding:7px 14px;
+    border-radius:20px;
+    text-decoration:none;
+  }
+  .site-nav a:hover{ background: rgba(247,245,239,0.18); text-decoration:none; }
+  .site-nav a.active{
+    background: var(--sun);
+    color: var(--board-green-2);
+    border-color: var(--sun);
+    font-weight:600;
+  }
+  .entry-pager{
+    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+  .pager-btn{
+    flex:1; min-width:220px;
+    font-family:'Lexend', sans-serif;
+    font-size:0.92rem; font-weight:500;
+    color: var(--board-green-2);
+    background: var(--card-paper-2);
+    border:1px solid rgba(45,74,62,0.2);
+    border-radius:8px;
+    padding:16px 20px;
+    text-decoration:none;
+    display:flex; align-items:center; gap:8px;
+  }
+  .pager-btn:hover{ background:#e4ddc9; text-decoration:none; }
+  .pager-btn.next{ justify-content:flex-end; text-align:right; margin-left:auto; }
+  @media (max-width:640px){ .pager-btn{ min-width:100%; } }
+
+  .hero{ max-width:1040px; margin:0 auto; padding: 32px 24px 56px; color: var(--chalk); }
+  .hero h1{
+    font-family:'Kalam', cursive; font-weight:700;
+    font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+    line-height:1.2; margin: 14px 0 12px; max-width: 28ch;
+  }
+  .hero .lede{ max-width:60ch; font-size:1rem; line-height:1.65; color: rgba(247,245,239,0.82); font-weight:300; }
+
+  main{
+    background: var(--card-paper);
+    border-radius: 22px 22px 0 0;
+    max-width:1040px; margin:0 auto; padding: 8px 0 0;
+    box-shadow: 0 -18px 50px rgba(0,0,0,0.25);
+  }
+  .section{ padding: 48px 40px; border-bottom: 1px dashed rgba(35,48,31,0.16); }
+  .section:last-of-type{ border-bottom:none; }
+  .section .eyebrow{ color:#a9702f; }
+  .section .eyebrow::before{ background:#a9702f; }
+  .section h2{ font-family:'Kalam', cursive; font-size:1.45rem; margin: 10px 0 20px; color: var(--board-green-2); }
+  .section p{ line-height:1.7; margin: 0 0 14px; }
+  .section p:last-child{ margin-bottom:0; }
+
+  .verdict{
+    display:flex; gap:16px; align-items:flex-start;
+    background: var(--card-paper-2); border-left:3px solid var(--sky);
+    border-radius:8px; padding:18px 22px; margin-bottom:22px;
+  }
+  .verdict .tag{
+    flex:none; font-family:'JetBrains Mono', monospace; font-size:0.65rem;
+    text-transform:uppercase; letter-spacing:0.06em; color: var(--sky);
+    background: rgba(77,148,163,0.1); border:1px solid rgba(77,148,163,0.3);
+    padding:4px 10px; border-radius:20px; margin-top:2px;
+  }
+  .verdict p{ margin:0; }
+
+  .sample-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+  .sample-card{ background: var(--card-paper-2); border-radius:8px; padding:20px; border-top:3px solid var(--sky); }
+  .sample-card.b{ border-top-color: var(--sun); }
+  .sample-card h3{ font-family:'Kalam', cursive; font-size:1.02rem; margin:0 0 8px; color: var(--board-green-2); }
+  .sample-card p{ font-size:0.9rem; margin:0; color:#3d4a37; }
+
+  .instrument-note{
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    color:#a9702f; margin-bottom:14px; display:block;
+  }
+  .timeline{ display:flex; flex-direction:column; gap:10px; }
+  .tl-step{
+    display:flex; gap:14px; align-items:flex-start;
+    background: var(--card-paper-2); border-radius:8px; padding:14px 18px;
+  }
+  .tl-num{
+    flex:none; width:28px; height:28px; border-radius:50%;
+    background: var(--sky); color: var(--chalk);
+    font-family:'JetBrains Mono', monospace; font-size:0.75rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .tl-step p{ margin:0; font-size:0.9rem; color:#3d4a37; }
+  .tl-note{
+    font-family:'JetBrains Mono', monospace; font-size:0.68rem;
+    color: var(--coral); margin-top:14px; display:block;
+  }
+
+  .qcard{
+    background: var(--card-paper-2); border-radius:8px; padding:16px 18px;
+    margin-bottom:12px; font-size:0.9rem; border-left:3px solid var(--sky);
+  }
+  .qcard .qlabel{
+    font-family:'JetBrains Mono', monospace; font-size:0.65rem;
+    text-transform:uppercase; color: var(--sky); display:block; margin-bottom:6px;
+  }
+  .qcard .answer{ color:#3d4a37; margin:0; }
+
+  footer{
+    background: var(--board-green-2); color: rgba(247,245,239,0.65);
+    padding: 30px 40px 40px; border-radius: 0 0 22px 22px;
+    max-width:1040px; margin:0 auto;
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem; line-height:1.8;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+
+  @media (max-width: 640px){
+    .sample-grid{ grid-template-columns: 1fr; }
+    .section{ padding: 36px 22px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">match<span>&amp;</span>remember</div>
+    <div class="meta">
+      E-Portfolio · Entry #5<br>
+      Research and Teaching Practicum II · UNIMINUTO
+    </div>
+  </div>
+
+  <nav class="site-nav">
+    <a href="index.html">Entry 1 · Front Page</a>
+    <a href="entry-2-data-collection-methods.html">Entry 2 · Data Collection</a>
+    <a href="entry-3-narrative-field-notes.html">Entry 3 · Narrative &amp; Field Notes</a>
+    <a href="entry-4-ethnography-focus-group.html">Entry 4 · Ethnography &amp; Focus Group</a>
+    <a href="entry-5-experimental-method.html" class="active">Entry 5 · Experimental Method</a>
+    <a href="entry-6-quasi-experimental.html">Entry 6 · Quasi-Experimental</a>
+    <a href="entry-7-oral-presentation-support.html">Entry 7 · Oral Presentation</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">week 9 · designing and justifying data collection methods — experimental methods</div>
+    <h1>The Logic of a True Experiment — and Why This Study Can't Quite Be One</h1>
+    <p class="lede">
+      This entry looks at experimental research: what makes a study a true
+      experiment, whether that design fits a classroom intervention like this
+      one, and what a fully experimental version of the project would look like
+      if it were possible.
+    </p>
+  </header>
+
+  <main>
+
+    <!-- USEFULNESS VERDICT -->
+    <section class="section">
+      <div class="eyebrow">01 · experimental methods: useful or not?</div>
+      <h2>Partially Useful — the Logic Fits, the Randomization Doesn't</h2>
+
+      <div class="verdict">
+        <span class="tag">Logic borrowed, not the full design</span>
+        <p>
+          A true experiment requires randomly assigning individual participants
+          to conditions, which is simply not possible here: the school provides
+          two pre-existing, intact groups of third graders, and reshuffling
+          children across sections is not something a researcher can do in a
+          real classroom. So this study cannot be a true experiment in the
+          strict sense.
+        </p>
+      </div>
+
+      <p>
+        Even so, the core experimental logic is exactly what this proposal
+        relies on: deliberately manipulating an independent variable — the
+        teaching method, matching game versus workbook practice — and measuring
+        its effect on a dependent variable, vocabulary test scores, while
+        trying to keep every other condition (time, teacher, words taught) the
+        same for both groups. That shared logic is what carries over into the
+        quasi-experimental design explored in the next entry.
+      </p>
+    </section>
+
+    <!-- IDEAL EXPERIMENTAL PROJECT EXAMPLE -->
+    <section class="section">
+      <div class="eyebrow">02 · project example — the ideal, fully experimental version</div>
+      <h2>If a True Experiment Were Possible</h2>
+      <span class="instrument-note">hypothetical design, for comparison only — not the design actually used</span>
+
+      <div class="timeline">
+        <div class="tl-step">
+          <div class="tl-num">1</div>
+          <p>Draw a pool of third-grade volunteers from several sections and <strong>randomly assign</strong> each student to either the matching-game condition or the workbook condition.</p>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">2</div>
+          <p>Apply the same vocabulary pretest to both randomly formed groups to confirm they start out equivalent.</p>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">3</div>
+          <p>Deliver the treatment: the matching game for one group, workbook practice for the other, under identical time and word conditions.</p>
+        </div>
+        <div class="tl-step">
+          <div class="tl-num">4</div>
+          <p>Apply an immediate posttest, then a delayed posttest two weeks later, to both groups.</p>
+        </div>
+      </div>
+      <span class="tl-note">⚠ not used in this study — the school's classroom groups are already formed and cannot be randomized</span>
+    </section>
+
+    <!-- GUIDING QUESTIONS -->
+    <section class="section">
+      <div class="eyebrow">03 · guiding questions</div>
+      <h2>Understanding Experiments</h2>
+
+      <div class="qcard">
+        <span class="qlabel">What is an experiment, and what are its main components?</span>
+        <p class="answer">An experiment is a research method in which the researcher deliberately manipulates one or more independent variables under controlled conditions in order to observe their effect on a dependent variable. Its main components are manipulation of the independent variable, control of outside factors, comparison between conditions, and — in a true experiment — random assignment of participants.</p>
+      </div>
+
+      <div class="qcard">
+        <span class="qlabel">What different settings do researchers carry out experiments in?</span>
+        <p class="answer">Experiments can take place in a laboratory setting, where conditions are tightly controlled and artificial, or in a field setting, such as a real classroom, where conditions are more natural but harder to control. This study, if it were experimental, would be a field experiment.</p>
+      </div>
+
+      <div class="qcard">
+        <span class="qlabel">What are the different ways a researcher might manipulate an independent variable?</span>
+        <p class="answer">A researcher can manipulate presence versus absence (the game is used or it isn't), amount or intensity (more or fewer minutes of game practice), or type (one kind of game activity versus another, such as matching cards versus bingo). This study manipulates type: matching-game practice versus workbook practice.</p>
+      </div>
+
+      <div class="qcard">
+        <span class="qlabel">What is experimental control, and how does it relate to differential influence?</span>
+        <p class="answer">Experimental control is the researcher's effort to hold every condition constant except the independent variable being tested — same time, same words, same teacher — usually achieved through randomization and standardized procedures. Differential influence happens when something other than the independent variable differs systematically between groups; strong experimental control is what allows a researcher to say any difference in outcomes was caused by the treatment and not by some other, uncontrolled difference between the groups.</p>
+      </div>
+    </section>
+
+    <!-- PAGER -->
+    <section class="section" style="border-bottom:none;">
+      <div class="entry-pager">
+        <a class="pager-btn prev" href="entry-4-ethnography-focus-group.html">← Entry #4: Ethnography &amp; Focus Group</a>
+        <a class="pager-btn next" href="entry-6-quasi-experimental.html">Entry #6: Quasi-Experimental Designs →</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>Research and Teaching Practicum II · UNIMINUTO — Corporación Universitaria Minuto de Dios</div>
+    <div><a href="index.html">Front page</a> · Entry #5</div>
+  </footer>
+
+</body>
+</html>

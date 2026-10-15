@@ -161,6 +161,50 @@
     table.fieldnotes{ font-size:0.78rem; }
     table.fieldnotes th, table.fieldnotes td{ padding:8px; }
   }
+
+  .site-nav{
+    max-width:1040px; margin:0 auto; padding: 16px 24px 0;
+    display:flex; gap:10px; flex-wrap:wrap;
+  }
+  .site-nav a{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    color: rgba(247,245,239,0.85);
+    background: rgba(247,245,239,0.08);
+    border:1px solid rgba(247,245,239,0.25);
+    padding:7px 14px;
+    border-radius:20px;
+    text-decoration:none;
+  }
+  .site-nav a:hover{ background: rgba(247,245,239,0.18); text-decoration:none; }
+  .site-nav a.active{
+    background: var(--sun);
+    color: var(--board-green-2);
+    border-color: var(--sun);
+    font-weight:600;
+  }
+  .entry-pager{
+    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+  .pager-btn{
+    flex:1; min-width:220px;
+    font-family:'Lexend', sans-serif;
+    font-size:0.92rem; font-weight:500;
+    color: var(--board-green-2);
+    background: var(--card-paper-2);
+    border:1px solid rgba(45,74,62,0.2);
+    border-radius:8px;
+    padding:16px 20px;
+    text-decoration:none;
+    display:flex; align-items:center; gap:8px;
+  }
+  .pager-btn:hover{ background:#e4ddc9; text-decoration:none; }
+  .pager-btn.next{ justify-content:flex-end; text-align:right; margin-left:auto; }
+  @media (max-width:640px){
+    .pager-btn{ min-width:100%; }
+  }
 </style>
 </head>
 <body>
@@ -173,6 +217,16 @@
     </div>
   </div>
 
+  <nav class="site-nav">
+    <a href="index.html">Entry 1 · Front Page</a>
+    <a href="entry-2-data-collection-methods.html">Entry 2 · Data Collection</a>
+    <a href="entry-3-narrative-field-notes.html" class="active">Entry 3 · Narrative &amp; Field Notes</a>
+    <a href="entry-4-ethnography-focus-group.html">Entry 4 · Ethnography &amp; Focus Group</a>
+    <a href="entry-5-experimental-method.html">Entry 5 · Experimental Method</a>
+    <a href="entry-6-quasi-experimental.html">Entry 6 · Quasi-Experimental</a>
+    <a href="entry-7-oral-presentation-support.html">Entry 7 · Oral Presentation</a>
+  </nav>
+
   <header class="hero">
     <div class="eyebrow">week 7 · tools for qualitative data collection</div>
     <h1>Narrative Studies, the Research Sample, and a Field Notes Instrument</h1>
@@ -180,13 +234,6 @@
       This entry weighs narrative inquiry against the needs of the matching-game
       study, sketches who the participants will be, and introduces the observation
       instrument chosen to complement the vocabulary test scores.
-    </p>
-    <p style="margin-top:18px;">
-      <a class="back-link" href="entry-2-data-collection-methods.html">← Entry #2: Data collection methods</a>
-      &nbsp;·&nbsp;
-      <a class="back-link" href="index.html">Front page</a>
-      &nbsp;·&nbsp;
-      <a class="back-link" href="entry-4-ethnography-focus-group.html">Entry #4: Ethnography &amp; focus group →</a>
     </p>
   </header>
 
@@ -306,6 +353,14 @@
         <div><span class="box"></span> Some students seemed off-task or bored</div>
         <div><span class="box"></span> Peer interaction/collaboration observed</div>
         <div><span class="box"></span> Students asked to repeat the activity</div>
+      </div>
+    </section>
+
+  
+    <section class="section pager-section" style="border-bottom:none;">
+      <div class="entry-pager">
+        <a class="pager-btn prev" href="entry-2-data-collection-methods.html">← Entry #2: Data Collection Methods</a>
+        <a class="pager-btn next" href="entry-4-ethnography-focus-group.html">Entry #4: Ethnography &amp; Focus Group →</a>
       </div>
     </section>
 
